@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDMI - Registro de Mantenimiento Institucional</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- LOGIN ACCESIBLE -->
+    <div id="login-card" class="card active login-accessible">
+        <div class="logo-text">RDMI</div>
+        <p class="subtitle">Institución Educativa Técnica Pérez y Aldana</p>
+        <div class="input-group">
+            <label>👤 Usuario</label>
+            <input type="text" id="user-input" placeholder="Ingrese su usuario">
+        </div>
+        <div class="input-group">
+            <label>🔒 Contraseña</label>
+            <input type="password" id="pass-input" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" onclick="validarIngreso()">INGRESAR</button>
+        <button class="btn-secondary-action" onclick="showPage('registro-card')">Registrar Nuevo Usuario</button>
+    </div>
+
+    <!-- REGISTRO DE USUARIOS -->
+    <div id="registro-card" class="card login-accessible">
+        <div class="logo-text" style="font-size: 3rem;">REGISTRO</div>
+        <p class="subtitle">Crear credenciales de acceso</p>
+        <div class="input-group">
+            <label>👤 Nuevo Usuario</label>
+            <input type="text" id="reg-user-input" placeholder="Cree su usuario">
+        </div>
+        <div class="input-group">
+            <label>🔒 Contraseña</label>
+            <input type="password" id="reg-pass-input" placeholder="••••••••">
+        </div>
+        <button class="btn-primary" onclick="registrarUsuario()">REGISTRAR</button>
+        <button class="btn-back" onclick="showPage('login-card')">← Volver al Login</button>
+    </div>
+
+    <!-- PANEL PRINCIPAL -->
+    <div id="menu-card" class="card">
+        <h2>Panel de Control Institucional</h2>
+        <div class="main-layout">
+            <div class="side-categories">
+                <h3>Gestión de Áreas</h3>
+                <div class="category-item" onclick="showPage('estructural-card')">🏗️ Estructural</div>
+                <div class="category-item" onclick="showPage('electrico-card')">⚡ Eléctricos</div>
+                <div class="category-item" onclick="showPage('recursos-card')">📦 Recursos</div>
+                <div class="category-item" onclick="showPage('admin-card')">👥 Personal</div>
+            </div>
+
+            <div class="order-console">
+                <h3>🚀 Consola de Órdenes</h3>
+                <div class="console-body">
+                    <input type="text" id="asunto" placeholder="Asunto del reporte...">
+                    <select id="encargado">
+                        <option>Docente de TICs</option>
+                        <option>Coordinador de Mantenimiento</option>
+                        <option>Servicios Generales</option>
+                    </select>
+                    <div class="priority-box">
+                        Prioridad: 
+                        <input type="radio" name="p" id="p1"> Baja 
+                        <input type="radio" name="p" id="p2" checked> Media 
+                        <input type="radio" name="p" id="p3"> Urgente
+                    </div>
+                    <textarea id="detalle-orden" rows="3" placeholder="Escriba el problema detalladamente..."></textarea>
+                    <button class="btn-send" onclick="enviarOrden()">ENVIAR AHORA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA ESTRUCTURAL -->
+    <div id="estructural-card" class="card">
+        <div class="table-header">
+            <h2>Registro Estructural</h2>
+            <button class="btn-add" onclick="addRow('tabla-est')">+ Fila</button>
+        </div>
+        <div class="table-container">
+            <table id="tabla-est">
+                <thead><tr><th>Elemento</th><th>Estado</th><th>Notas</th><th>Mantenimiento</th></tr></thead>
+                <tbody id="body-tabla-est">
+                    <tr>
+                        <td contenteditable="true">Muros Bloque A</td>
+                        <td contenteditable="true">Bueno</td>
+                        <td contenteditable="true">-</td>
+                        <td contenteditable="true">Pendiente</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn-back" onclick="showPage('menu-card')">← Volver</button>
+    </div>
+
+    <!-- TABLA ELÉCTRICA -->
+    <div id="electrico-card" class="card">
+        <div class="table-header">
+            <h2>Sistemas Eléctricos</h2>
+            <button class="btn-add" onclick="addRow('tabla-elec')">+ Fila</button>
+        </div>
+        <div class="table-container">
+            <table id="tabla-elec">
+                <thead><tr><th>Componente</th><th>Revisión</th><th>Responsable</th><th>Estado Actual</th></tr></thead>
+                <tbody id="body-tabla-elec">
+                    <tr>
+                        <td contenteditable="true">Tablero Central</td>
+                        <td contenteditable="true">12/05/2026</td>
+                        <td contenteditable="true">Ing. Pérez</td>
+                        <td contenteditable="true">Funcionando</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn-back" onclick="showPage('menu-card')">← Volver</button>
+    </div>
+
+    <!-- TABLA RECURSOS -->
+    <div id="recursos-card" class="card">
+        <div class="table-header">
+            <h2>Inventario de Recursos</h2>
+            <button class="btn-add" onclick="addRow('tabla-rec')">+ Fila</button>
+        </div>
+        <div class="table-container">
+            <table id="tabla-rec">
+                <thead><tr><th>Recurso</th><th>Cant.</th><th>Ubicación</th><th>Estado Actual</th></tr></thead>
+                <tbody id="body-tabla-rec">
+                    <tr>
+                        <td contenteditable="true">Ventiladores</td>
+                        <td contenteditable="true">12</td>
+                        <td contenteditable="true">Sala TICs</td>
+                        <td contenteditable="true">Operativo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn-back" onclick="showPage('menu-card')">← Volver</button>
+    </div>
+
+    <!-- TABLA PERSONAL -->
+    <div id="admin-card" class="card">
+        <div class="table-header">
+            <h2>Personal Administrativo</h2>
+            <button class="btn-add" onclick="addRow('tabla-adm')">+ Fila</button>
+        </div>
+        <div class="table-container">
+            <table id="tabla-adm">
+                <thead><tr><th>Nombre</th><th>Cargo</th><th>Jornada</th></tr></thead>
+                <tbody id="body-tabla-adm">
+                    <tr>
+                        <td contenteditable="true">Juan Gómez</td>
+                        <td contenteditable="true">Auxiliar</td>
+                        <td contenteditable="true">Mañana</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="btn-back" onclick="showPage('menu-card')">← Volver</button>
+    </div>
+
+    <script src="script.js"></script>require_once "config/conexion.php";
+
+</body>
+</html>
